@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan ASAS Bahasa Inggris Kelas IX</title>
+<style>
+:root{--navy:#142d4e;--blue:#2563eb;--pale:#eef4ff;--ink:#172033;--muted:#64748b;--line:#dbe3ef;--green:#15803d;--red:#b91c1c}
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6fb;color:var(--ink);font-family:Arial,sans-serif;line-height:1.55}
+header{background:linear-gradient(120deg,#142d4e,#2563eb);color:white;padding:28px 18px}
+.wrap{max-width:900px;margin:auto}
+.brand{font-size:13px;opacity:.85;letter-spacing:1px;font-weight:bold}
+h1{font-size:clamp(24px,5vw,34px);margin:8px 0}
+.sub{opacity:.9;margin:0}
+main{max-width:900px;margin:22px auto;padding:0 14px}
+.panel,.question{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 4px 14px #152b4a0a}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.stat{background:#ffffff20;border:1px solid #ffffff35;border-radius:10px;padding:10px;text-align:center}
+.stat b{display:block;font-size:20px}
+label{display:block;font-weight:bold;margin:12px 0 5px}
+input[type=text]{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;font-size:16px}
+button{border:0;border-radius:10px;padding:12px 18px;font-size:15px;font-weight:bold;cursor:pointer}
+.primary{background:var(--blue);color:white}
+.secondary{background:var(--pale);color:var(--navy)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{background:var(--pale);color:var(--navy);padding:7px 11px;border-radius:30px;font-size:13px;font-weight:bold}
+.progress{height:8px;background:#e8edf5;border-radius:9px;overflow:hidden;margin:14px 0}
+.progress>div{height:100%;width:0;background:var(--blue);transition:width .2s}
+.qnum{color:var(--blue);font-size:13px;font-weight:bold}
+.question h3{font-size:18px;margin:7px 0 15px}
+.options{display:grid;gap:9px}
+.option{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+.option:hover{background:#f7faff;border-color:#9bb9f5}
+.option input{margin-top:4px;accent-color:var(--blue)}
+.nav{display:flex;justify-content:space-between;gap:10px;margin:16px 0 28px}
+.hidden{display:none!important}
+.result{text-align:center;padding:25px}
+.score{font-size:52px;color:var(--blue);font-weight:800;margin:8px}
+.review-item{border-top:1px solid var(--line);padding:14px 0;text-align:left}
+.correct{color:var(--green);font-weight:bold}
+.wrong{color:var(--red);font-weight:bold}
+.small{color:var(--muted);font-size:13px}
+footer{text-align:center;color:var(--muted);padding:24px;font-size:12px}
+@media(max-width:560px){
+.info{grid-template-columns:1fr 1fr}
+.panel,.question{padding:16px}
+.nav button{flex:1}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="wrap">
+ <div class="brand">SMP ISLAM TERPADU MENTARI ILMU</div>
+ <h1>Latihan ASAS Bahasa Inggris</h1>
+ <p class="sub">Kelas IX • Semester Ganjil • Tahun Pelajaran 2026/2027</p>
+ <div class="info">
+  <div class="stat"><b>40</b><span>Soal ABCD</span></div>
+  <div class="stat"><b>90</b><span>Menit</span></div>
+  <div class="stat"><b>5</b><span>Materi utama</span></div>
+ </div>
+</div>
+</header>
+
+<main>
+
+<section id="start" class="panel">
+ <h2>Petunjuk Pengerjaan</h2>
+ <ul>
+  <li>Isi nama sebelum memulai.</li>
+  <li>Pilih satu jawaban paling tepat: A, B, C, atau D.</li>
+  <li>Kerjakan semua 40 soal.</li>
+  <li>Tekan Selesai & Lihat Nilai untuk melihat hasil dan pembahasan.</li>
+ </ul>
+ <p class="small">Latihan ini dibuat berdasarkan indikator pada kisi-kisi yang kamu unggah. Seluruh bentuk soal disajikan sebagai pilihan ganda ABCD untuk latihan.</p>
+ <label for="student">Nama siswa</label>
+ <input id="student" type="text" placeholder="Masukkan nama kamu">
+ <br><br>
+ <button class="primary" onclick="startQuiz()">Mulai Mengerjakan</button>
+</section>
+
+<section id="quiz" class="hidden">
+ <div class="panel">
+  <div class="toolbar">
+   <span class="pill" id="studentLabel">Peserta</span>
+   <span class="pill">Waktu: <span id="timer">90:00</span></span>
+   <span class="pill" id="counter">Soal 1 dari 40</span>
+  </div>
+  <div class="progress"><div id="bar"></div></div>
+  <div class="toolbar">
+   <span class="small" id="topic"></span>
+   <span class="small" id="answered">Terjawab: 0/40</span>
+  </div>
+ </div>
+
+ <div id="questionArea"></div>
+
+ <div class="nav">
+  <button class="secondary" id="prev" onclick="move(-1)">← Sebelumnya</button>
+  <button class="primary" id="next" onclick="move(1)">Berikutnya →</button>
+ </div>
+
+ <div class="panel toolbar">
+  <span class="small">Pastikan semua jawaban sudah dipilih.</span>
+  <button class="primary" onclick="finishQuiz()">Selesai & Lihat Nilai</button>
+ </div>
+</section>
+
+<section id="result" class="hidden">
+ <div class="panel result">
+  <h2>Hasil Latihan</h2>
+  <div id="resultName"></div>
+  <div class="score" id="score">0</div>
+  <p id="summary"></p>
+  <button class="primary" onclick="showReview()">Lihat Pembahasan</button>
+  <button class="secondary" onclick="location.reload()">Ulangi Latihan</button>
+ </div>
+ <div class="panel hidden" id="review">
+  <h2>Kunci Jawaban & Pembahasan</h2>
+  <div id="reviewList"></div>
+ </div>
+</section>
+
+</main>
+
+<footer>Latihan mandiri • ASAS Bahasa Inggris Kelas IX</footer>
+
+<script>
+const questions = [
+
+{t:"Reading & Descriptive",q:"What is the main topic of a descriptive text about a school library?",o:["The steps to build a library","The description of the school library","A story about a librarian","How to borrow a book"],a:1,e:"Teks deskriptif bertujuan menggambarkan orang, tempat, atau benda."},
+
+{t:"Reading & Descriptive",q:"Which action shows an Islamic value when studying in the library?",o:["Making noise with friends","Leaving books on the floor","Reading useful books and keeping the library clean","Damaging books that are old"],a:2,e:"Membaca buku bermanfaat dan menjaga kebersihan merupakan perilaku baik saat menuntut ilmu."},
+
+{t:"Degree of Comparison",q:"Choose the correct comparative sentence.",o:["Ali is more tall than Budi.","Ali is taller than Budi.","Ali is tallest than Budi.","Ali is the taller Budi."],a:1,e:"Tall menjadi taller dalam comparative degree."},
+
+{t:"Degree of Comparison",q:"Mount Everest is the _____ mountain in the world.",o:["high","higher","highest","most high"],a:2,e:"Superlative untuk high adalah the highest."},
+
+{t:"Degree of Comparison",q:"Rina helps her parents more often than her brother. The correct sentence is ...",o:["Rina is helpful than her brother.","Rina is more helpful than her brother.","Rina is most helpful her brother.","Rina helpfulest than her brother."],a:1,e:"Untuk adjective helpful, comparative dibentuk dengan more."},
+
+{t:"Procedure Text",q:"What is the social function of a procedure text entitled 'How to Make Honey Lemon Water'?",o:["To describe a lemon","To tell a past experience","To explain how to make honey lemon water","To entertain readers with a story"],a:2,e:"Procedure text menjelaskan langkah melakukan atau membuat sesuatu."},
+
+{t:"Procedure Text",q:"In a recipe, what should you usually do after adding honey to the lemon water?",o:["Stir the mixture well","Throw the mixture away","Put the glass in a cupboard","Wash the lemon again"],a:0,e:"Setelah madu ditambahkan, campuran biasanya diaduk hingga tercampur."},
+
+{t:"Procedure Text",q:"Which instruction best shows cleanliness when preparing a drink?",o:["Use an unwashed glass","Wash your hands before preparing the drink","Put the ingredients on the floor","Use dirty water"],a:1,e:"Mencuci tangan sebelum menyiapkan minuman menunjukkan prinsip kebersihan."},
+
+{t:"Expression of Disappointment",q:"Which expression shows disappointment?",o:["I am very pleased.","What a wonderful day!","I am disappointed with the result.","Congratulations on your success!"],a:2,e:"I am disappointed with the result berarti saya kecewa dengan hasilnya."},
+
+{t:"Expression of Disappointment",q:"A friend says, 'I did not pass the competition.' What is the best response?",o:["That's your problem.","I'm sorry to hear that. Keep trying!","You should stop trying forever.","I don't care."],a:1,e:"Respons yang tepat menunjukkan empati dan memberi semangat."},
+
+{t:"Expression of Disappointment",q:"Your friend failed an exam. Which response reflects patience and trust in Allah?",o:["Give up and blame everyone.","Be patient, learn from it, and keep praying.","Never study again.","Be angry with your teacher."],a:1,e:"Sabar dan tawakal disertai evaluasi diri, usaha, dan doa."},
+
+{t:"Asking & Giving Opinion",q:"Which sentence is used to ask for someone's opinion?",o:["What do you think about our school garden?","I think it is beautiful.","Thank you very much.","I am sorry to hear that."],a:0,e:"What do you think about digunakan untuk meminta pendapat."},
+
+{t:"Asking & Giving Opinion",q:"Complete the dialogue: A: 'What do you think about the school garden?' B: '_____.'",o:["I think it is beautiful.","Where is your garden?","I am disappointed.","Please close the door."],a:0,e:"I think merupakan ungkapan untuk memberikan pendapat."},
+
+{t:"Asking & Giving Opinion",q:"Your classmate has a different opinion during a discussion. What should you say politely?",o:["Your opinion is stupid.","Be quiet!","I respect your opinion, but I think differently.","You are always wrong."],a:2,e:"Ungkapan tersebut menyampaikan ketidaksetujuan dengan santun."},
+
+{t:"Present Perfect Tense",q:"Which sentence uses the Present Perfect Tense correctly?",o:["She have finished her homework.","She has finished her homework.","She finishing her homework.","She finish her homework yesterday."],a:1,e:"Pola Present Perfect adalah subject + have/has + V3."},
+
+{t:"Present Perfect Tense",q:"I _____ visited my grandmother twice this month.",o:["has","have","am","was"],a:1,e:"Subjek I menggunakan have; V3 dari visit adalah visited."},
+
+{t:"Present Perfect Tense",q:"Dina reads the Qur'an every day. She started this habit last year and still does it now. Which sentence is correct?",o:["Dina has read the Qur'an every day since last year.","Dina have read the Qur'an every day since last year.","Dina read the Qur'an tomorrow.","Dina is read the Qur'an since last year."],a:0,e:"Present Perfect dapat menunjukkan kegiatan yang dimulai di masa lalu dan masih berlangsung hingga sekarang."},
+
+{t:"Present Perfect Tense",q:"Which sentence describes a finished action at a specific time in the past?",o:["I have visited Bandung.","I visited Bandung last year.","I have live in Bandung.","I has visited Bandung."],a:1,e:"Simple Past digunakan untuk kejadian selesai pada waktu lampau yang jelas."},
+
+{t:"Procedure Text",q:"Arrange these fruit-salad steps logically: (1) Serve the salad. (2) Wash and cut the fruits. (3) Mix the fruits with dressing. (4) Put the fruits in a bowl.",o:["2 – 4 – 3 – 1","1 – 2 – 3 – 4","4 – 1 – 2 – 3","3 – 2 – 4 – 1"],a:0,e:"Urutan logis: cuci dan potong buah, masukkan ke mangkuk, campur dressing, lalu sajikan."},
+
+{t:"Hortatory / Campaign Text",q:"Which paragraph is the best school-cleanliness campaign message?",o:["The school has many classrooms and windows.","Cleanliness is important. Let us put rubbish in bins, reduce plastic, and keep our school clean because cleanliness is part of our faith.","Yesterday, I went to school with my friend.","A broom is a tool for cleaning the floor."],a:1,e:"Paragraf kampanye yang baik memuat ajakan, tindakan jelas, dan alasan."},
+
+{t:"Degree of Comparison",q:"Choose all correct comparison sentences. Which option contains only correct sentences?",o:["A: This book is cheaper than that one. B: Mount A is the highest.","A: This book is more cheap than that one. B: Mount A is higherest.","A: This book is cheapest than that one. B: Mount A is more high.","A: This book is cheap than that one. B: Mount A is the most high."],a:0,e:"Cheaper than adalah comparative yang benar; the highest adalah superlative yang benar."},
+
+{t:"Procedure Text",q:"Which group of actions shows cleanliness and halal food preparation?",o:["Wash hands, use clean utensils, and choose halal ingredients.","Use dirty utensils and unknown ingredients.","Leave food uncovered on the floor.","Mix clean and spoiled ingredients."],a:0,e:"Persiapan makanan memperhatikan kebersihan alat dan kehalalan bahan."},
+
+{t:"Procedure Text",q:"A recipe says: boil water, add noodles, cook for three minutes, add seasoning, and serve. Which statement is correct?",o:["The noodles are served before being cooked.","Seasoning is added after the noodles are cooked.","Water is boiled after serving.","The recipe describes a person's appearance."],a:1,e:"Menurut urutan teks, mi dimasak terlebih dahulu lalu bumbu ditambahkan."},
+
+{t:"Expression of Disappointment",q:"Which expressions can show disappointment?",o:["I'm sorry it didn't work out.","What a pity!","I'm really disappointed.","All of the above."],a:3,e:"Ketiga ungkapan tersebut dapat digunakan untuk menyatakan kekecewaan."},
+
+{t:"Asking & Giving Opinion",q:"Which sentence is polite and suitable for a charity-program discussion?",o:["Your idea is useless.","Could we consider helping the people in need?","Do what I say!","I refuse to listen."],a:1,e:"Could we consider merupakan cara santun menyampaikan usulan."},
+
+{t:"Present Perfect Tense",q:"Which sentence is grammatically correct?",o:["They has donated books.","We have cleaned the mosque.","He have helped the teacher.","She have visited the museum."],a:1,e:"Subjek we menggunakan have dan V3 cleaned."},
+
+{t:"Environmental Care",q:"Which action is the best campaign to protect animals as Allah's creations?",o:["Destroying animal habitats for fun","Leaving plastic waste in rivers","Protecting habitats and not disturbing wild animals","Keeping wild animals in unsuitable places"],a:2,e:"Melindungi habitat dan tidak mengganggu hewan merupakan tindakan menjaga makhluk ciptaan Allah."},
+
+{t:"Degree of Comparison",q:"True or false: The comparative form of 'good' is 'better'. Choose the correct answer.",o:["True, 'better' is the comparative form of 'good'.","False, it is 'gooder'.","False, it is 'goodest'.","True, but only for plural nouns."],a:0,e:"Good – better – best merupakan bentuk tidak beraturan."},
+
+{t:"Procedure Text",q:"Which statement best connects food cleanliness with Islamic values?",o:["Clean tools and halal ingredients are important when preparing food.","Cleanliness does not matter when cooking.","Any ingredient is acceptable even if its source is unknown.","Food should be prepared with dirty hands."],a:0,e:"Menjaga kebersihan dan memilih bahan halal sejalan dengan nilai Islam."},
+
+{t:"Present Perfect Tense",q:"Is this sentence correct: 'She has completed her assignment.'?",o:["Yes, because it uses has + V3.","No, because has must be followed by V1.","No, because she uses have.","Yes, because it uses is + V-ing."],a:0,e:"Kalimat benar: she + has + completed (V3)."},
+
+{t:"Asking & Giving Opinion",q:"What does the expression 'I respect your opinion' show?",o:["Anger","Politeness and respect for a different opinion","Disappointment","An instruction"],a:1,e:"Ungkapan itu menunjukkan penghargaan terhadap pendapat orang lain."},
+
+{t:"Procedure Text",q:"What is the correct general order of a procedure text?",o:["Conclusion – complication – resolution","Goal/materials – steps","Orientation – events – reorientation","Identification – description only"],a:1,e:"Procedure text umumnya memiliki tujuan, bahan/alat jika diperlukan, dan langkah-langkah."},
+
+{t:"Expression of Disappointment",q:"A student is disappointed after failing a test. Which action shows tawakal and self-evaluation?",o:["Blaming friends and refusing to study","Praying, staying patient, and studying harder","Giving up completely","Mocking students who passed"],a:1,e:"Tawakal dilakukan bersama usaha, doa, kesabaran, dan evaluasi diri."},
+
+{t:"Descriptive vs Procedure",q:"Read: 'An elephant is a large animal. It has a long trunk and big ears.' What type of text is it?",o:["Procedure text, because it gives steps","Descriptive text, because it describes an animal","Narrative text, because it tells a legend","Invitation text, because it asks someone"],a:1,e:"Kalimat tersebut menggambarkan ciri-ciri gajah, jadi termasuk descriptive text."},
+
+{t:"Degree of Comparison",q:"Choose the correct sentence about the virtues of worship.",o:["Praying on time is better than delaying it without reason.","Praying on time is gooder than delaying it.","Praying on time is the better than all.","Praying on time is more good."],a:0,e:"Bentuk comparative yang tepat dari good adalah better than."},
+
+{t:"Asking & Giving Opinion",q:"Match the function: 'In my opinion, we should collect donations for the charity program.'",o:["Asking for an opinion","Giving an opinion or suggestion","Expressing disappointment","Giving an instruction"],a:1,e:"In my opinion menandai pemberian pendapat."},
+
+{t:"Procedure Text",q:"In a simple explanation of tayamum, which action should come first?",o:["Make the intention (niat)","Finish the prayer","Wipe the feet","Leave without preparing"],a:0,e:"Dalam urutan pembelajaran tayamum, niat merupakan bagian awal."},
+
+{t:"Present Perfect Tense",q:"Complete the sentence: 'The Muslim scientist _____ many important contributions.'",o:["have made","has made","has make","have making"],a:1,e:"Subjek tunggal the Muslim scientist menggunakan has + V3 made."},
+
+{t:"Expression of Disappointment",q:"Your friend did not win a competition. Which response combines empathy and husnudzan?",o:["You are a failure.","I'm sorry, but maybe there is a good lesson in this. Keep doing your best.","You will never succeed.","It is all your fault."],a:1,e:"Respons ini mengakui kekecewaan, mengajak berprasangka baik, dan tetap berusaha."},
+
+{t:"Integrated Context",q:"Complete the paragraph: 'Our youth group _____ a Ramadan program at the mosque for three years. We _____ food packages and _____ the mosque together.'",o:["has organized – have prepared – have cleaned","organize – prepares – cleans","have organize – has prepare – cleaned","is organizing – was prepare – has clean"],a:0,e:"Our youth group menggunakan has organized; we menggunakan have prepared dan have cleaned."}
+
+];
+
+let current=0;
+let answers=Array(questions.length).fill(null);
+let seconds=90*60;
+let tick=null;
+let finished=false;
+
+function startQuiz(){
+ const name=document.getElementById('student').value.trim();
+ if(!name){
+  alert('Masukkan nama terlebih dahulu.');
+  return;
+ }
+ document.getElementById('studentLabel').textContent=name;
+ document.getElementById('start').classList.add('hidden');
+ document.getElementById('quiz').classList.remove('hidden');
+ render();
+
+ tick=setInterval(()=>{
+  seconds--;
+  document.getElementById('timer').textContent=fmt(seconds);
+  if(seconds<=0){
+   clearInterval(tick);
+   finishQuiz();
+  }
+ },1000);
+}
+
+function fmt(s){
+ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+}
+
+function render(){
+ const q=questions[current];
+
+ document.getElementById('counter').textContent=`Soal ${current+1} dari ${questions.length}`;
+ document.getElementById('topic').textContent=q.t;
+ document.getElementById('bar').style.width=((current+1)/questions.length*100)+'%';
+
+ document.getElementById('answered').textContent=
+ `Terjawab: ${answers.filter(x=>x!==null).length}/${questions.length}`;
+
+ document.getElementById('questionArea').innerHTML=`
+ <article class="question">
+  <div class="qnum">PERTANYAAN ${current+1}</div>
+  <h3>${q.q}</h3>
+  <div class="options">
+   ${q.o.map((v,i)=>`
+    <label class="option">
+     <input type="radio" name="answer" value="${i}"
+     ${answers[current]===i?'checked':''}
+     onchange="choose(${i})">
+     <span><b>${'ABCD'[i]}.</b> ${v}</span>
+    </label>
+   `).join('')}
+  </div>
+ </article>`;
+
+ document.getElementById('prev').disabled=current===0;
+ document.getElementById('next').textContent=
+ current===questions.length-1?'Ke soal pertama':'Berikutnya →';
+}
+
+function choose(i){
+ answers[current]=i;
+ document.getElementById('answered').textContent=
+ `Terjawab: ${answers.filter(x=>x!==null).length}/${questions.length}`;
+}
+
+function move(d){
+ if(current===questions.length-1&&d===1){
+  current=0;
+ }else{
+  current=Math.max(0,Math.min(questions.length-1,current+d));
+ }
+ render();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function finishQuiz(){
+ if(finished)return;
+
+ const unanswered=answers.filter(x=>x===null).length;
+
+ if(unanswered>0&&!confirm(`Masih ada ${unanswered} soal belum dijawab. Tetap selesaikan?`)){
+  return;
+ }
+
+ finished=true;
+ if(tick)clearInterval(tick);
+
+ const correct=questions.reduce((n,q,i)=>n+(answers[i]===q.a?1:0),0);
+ const score=Math.round(correct/questions.length*100);
+
+ document.getElementById('quiz').classList.add('hidden');
+ document.getElementById('result').classList.remove('hidden');
+
+ document.getElementById('resultName').textContent=
+ 'Nama: '+document.getElementById('student').value;
+
+ document.getElementById('score').textContent=score;
+
+ document.getElementById('summary').textContent=
+ `Jawaban benar: ${correct} • Salah/kosong: ${questions.length-correct} • Total soal: ${questions.length}`;
+
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showReview(){
+ const el=document.getElementById('review');
+ el.classList.remove('hidden');
+
+ document.getElementById('reviewList').innerHTML=
+ questions.map((q,i)=>`
+ <div class="review-item">
+  <b>${i+1}. ${q.q}</b>
+  <p class="${answers[i]===q.a?'correct':'wrong'}">
+   ${answers[i]===q.a?'Benar':'Belum tepat'}
+   • Jawaban benar: ${'ABCD'[q.a]}. ${q.o[q.a]}
+  </p>
+  <p class="small">${q.e}</p>
+ </div>
+ `).join('');
+
+ el.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
